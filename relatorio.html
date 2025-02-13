@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+
+<head>
+  <script src="./js/componentes/cookiesImport.js"></script>
+
+  <meta name="robots" content="noindex" />
+  <meta
+    http-equiv="cache-control"
+    content="no-cache, no-store, must-revalidate"
+  />
+  <meta http-equiv=" content-type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Validar ITI</title>
+
+  <link rel="icon" type="image/x-icon" href="./favicon-48x48.png" />
+
+  <!--Importar CSS-->
+  <link rel="stylesheet" href="./css/all.css" />
+  <link rel="stylesheet" href="./css/core.css" />
+  <link rel="stylesheet" href="./css/css.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+  />
+  <link rel="stylesheet" href="./css/customStyle.css" />
+  <link rel="stylesheet" href="./css/boostrap.css" />
+  <link rel="stylesheet" type="text/css" href="./css/print.min.css" />
+  <link rel="stylesheet" href="./node_modules/@govbr-ds/core/dist/core.css" />
+
+  <!-- Importar JS -->
+  <script type="text/javascript" src="./js/bibliotecas/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/bibliotecas/jquery.mask.js"></script>
+  <script type="text/javascript" src="./js/componentes/custom.js"></script>
+  <script type="text/javascript" src="./js/services/relSim.js"></script>
+  <!-- <script type="text/javascript" src="./js/bibliotecas/core-init.js"></script> -->
+  <script src="./js/bibliotecas/sweetalert2.all.min.js"></script>
+  <script src="./js/bibliotecas/popper.min.js"></script>
+  <script src="./js/bibliotecas/boostrap.js"></script>
+
+  <!-- NÃO SEI -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+  <!-- TRADUÇÃO -->
+  <script type="text/javascript" src="./js/translation/relatorio.js"></script>
+  <script type="text/javascript" src="./js/translation/componentes.js"></script>
+
+  <!-- COMPONENTES -->
+  <script type="text/javascript" src="./js/componentes/custom.js"></script>
+  <!--  -->
+  <script type="text/javascript" src="./js/componentes/header.js"></script>
+  <script type="text/javascript" src="./js/componentes/menu.js"></script>
+  <script
+    type="text/javascript"
+    src="./js/componentes/searchFilterCustom.js"
+  ></script>
+</head>
+
+<body>
+  <script>
+    // sessionStorage.setItem('page', 'orientacoes')
+    // if (sessionStorage.getItem('language') == null) {
+    //     sessionStorage.setItem('language', 'portuga')
+    // }
+    // translate();
+    // translateheaders();
+  </script>
+
+  <div class="template-base d-flex">
+
+    <div id="containerDoc" class="container">
+      <div class="br-breadcrumb pb-3">
+        <ul class="crumb-list">
+          <li class="crumb home">
+            <a href="./index.html">
+              <div class="br-button circle">
+                <span class="sr-only">Página inicial</span>
+                <i class="icon fas fa-home branco"></i>
+              </div>
+            </a>
+          </li>
+          <!-- <li class="crumb"><i class="icon fas fa-chevron-right"></i><a id="linkv" href=./index.html
+                            style="width: 92px;">Validar</a>
+                    </li> -->
+          <li class="crumb" data-active="active">
+            <i class="icon fas fa-chevron-right"></i
+            ><span class="simples" style="width: 92px" id="Breadcrumbs"
+              >Simples</span
+            >
+          </li>
+          <li id="completob" class="crumb" data-active="active">
+            <i class="icon fas fa-chevron-right"></i
+            ><a
+              class="completo branco"
+              href="./relatorioDeConformidade.html"
+              style="width: 120px"
+              >Completo</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <documento id="documento">
+        <span id="ancoradaAlert"></span>
+        <br id="removeTag1" />
+        <div class="br-message warning ">
+          <div class="icon ml-3"><i class="fas fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div class="content" aria-label="Em caso de dúvida, não compartilhe sua senha com terceiros. Ligue para a Central de atendimento." role="alert"><span class="message-title" id="atencao">Atenção.</span><span class="message-body" id="textatencao"> o conteúdo do documento é de inteira responsabilidade do(s)
+            signatário(s).</span>
+          </div>
+          <div class="close">
+            <button class="br-button circle small" type="button" aria-label="Fechar a messagem alterta"><i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <br id="removeTag2" />
+        <button id="impressao" class="br-button secondary pl-1" onclick="preImpressao()">
+          <i class="fa fa-print pr-1 branco" id="impressora"></i>
+        </button>
+        <infodoc class="mt-1 ml-5 mr-5 opacidade" style="display: block;">
+            <p>
+              <strong><span class="infoGeralArquivo">Informações gerais do arquivo:</span></strong>
+            </p>
+            <strong id="nomeDoArquivo">Nome do arquivo:</strong>
+            <span id="nomeArquivo" class="espaco quebraDeFrase">document.pdf</span>
+            <br>
+            <strong class="branco">Hash:</strong>
+            <span id="hashArquivo" class="espaco branco quebraDeFrase">a8b0c83e6559e509c2099ebdb592f0ec038362a652ae916209888636e3decb63</span>
+            <br>
+            <strong id="dataDeValidacao" class="branco">Data da validação:</strong>
+            <span id="dataValidacao" class="espaco branco">21/02/2025</span>
+            <br>
+            <span id="ancorada"></span>
+            <hr id="removeTag4">
+          </infodoc>
+
+        <infoDoc class="mt-1 ml-5 mr-5" style="display: none">
+          <p>
+            <strong
+              ><span class="infoGeralArquivo"
+                >Informações gerais do arquivo:</span
+              ></strong
+            >
+          </p>
+          <strong id="nomeDoArquivo">Nome do arquivo:</strong>
+          <span id="nomeArquivo" class="espaco quebraDeFrase"></span>
+          <br />
+          <strong class="branco">Hash:</strong>
+          <span id="hashArquivo" class="espaco branco quebraDeFrase"></span>
+          <br />
+          <strong id="dataDeValidacao" class="branco"
+            >Data da validação:
+          </strong>
+          <span id="dataValidacao" class="espaco branco"></span>
+          <br />
+          <span id="ancorada"></span>
+          <hr id="removeTag4" />
+        </infoDoc>
+
+        <assinaturas id="assinaturas" class="col-10 offsetRelatorio">
+          
+            <assinatura class="opacidade" style="display: block;"><bannerass class="col-12 row d-flex flex-column">
+                        <p class="mb-4 informacoes">
+                        <img class="iconAss" id="icon" src="sucesso_icone.svg">
+                        <strong class="infoAssinatura">Informações da Assinatura:</strong>
+                        </p>
+                        <span>
+                            <strong class="branco assinadoPor">Assinado por:</strong>
+                            <span class="espaco branco">POLICIA CIVIL DO ESTADO DE SAO PAULO</span>
+                        </span></bannerass><infoass class="row">
+                    <div class="col-12 row">
+                    <div class="col-8 branco">
+                        
+    
+                        <span class="mb-4 cnpj branco"><strong>CNPJ:</strong><span id="cnpjb" class="espaco branco">04.236.548/0008-62</span></span><br>
+    
+                        <strong class="identificador">CPF do representante:</strong>
+                        <span class="espaco">***.141.678-**</span>
+                        <br>
+                        <strong class="numserie">Nº de série de certificado emitente:</strong>
+                        <span class="espaco" style="word-wrap: break-word;">0x5402054a737dc5ed</span>
+                        <br>
+                        <strong class="dataDaValidacao">Data da assinatura:</strong>
+                        <span class="espaco">12/02/2025 18:17:42 BRT</span>
+                        <br>
+                        <br>
+                        <!--
+                        <strong class="certificado">Certificado emitido por:</strong>
+                        <br>
+                        <strong class="autoridade">Autoridade certificadora:</strong>
+                        <span class="espaco">12/02/2025 18:17:42 BRT</span>
+                        <br>
+                        <strong class="certificacao">Política de certificação:</strong>
+                        <span class="espaco">12/02/2025 18:17:42 BRT</span>
+                        <br>
+                        <br>
+                        -->
+                    </div>
+                    <div class="col-4"><img id="bandeirab" src="icp.svg"></div>
+                    </div></infoass><frases class="col-12 row"><div><strong class="branco frase">Assinatura aprovada.</strong><br><p></p></div></frases></assinatura></assinaturas>
+      </documento>
+      <div id="removeTag6">
+        <hr />
+      </div>
+
+      <!-- <div class="mt-1 mb-3 col-10 offset-1" id="botaoRelConform"> -->
+      <div class="row">
+        <div id="botoesGerais" class="offset-3 col-6">
+          <div id="botoesVizualizar">
+            <button
+              id="botaoVisualizarConf"
+              type="button"
+              class="br-button primary"
+              onclick="window.location.href = ('relatorioDeConformidade.html')"
+            >
+              <span id="visualizar_conf">
+                Ver Relatório de Conformidade
+              </span>
+            </button>
+
+            <button
+              id="botaoVisualizarDoc"
+              type="button"
+              class="br-button secondary"
+            >
+              <span id="visualizar_doc"> Visualizar Documento </span>
+            </button>
+          </div>
+          <!-- <div class="reviewContainer mb-3" onclick="avaliarBotao()">
+                            <div class="avaliarIcon">
+                                <img src="./imagens/icone_avaliacaoo.png" alt="Ícone avaliação">
+                            </div>
+
+                            <div class="reviewText">
+
+                                <strong style="font-weight: 850;">AVALIE NOSSO SERVIÇO</strong>
+
+
+                                <button class="br-button" id="avaliarButton"><span
+                                        style="font-weight: bold;">Avaliar</span></button>
+                            </div>
+                        </div> -->
+        </div>
+      </div>
+      <hr id="removeTag5" />
+      <!-- </div> -->
+      <div class="row justify-content-center" id="bannerAvaliacao">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="content-container mb-3" id="review-container">
+            <div id="text-content">
+              <p class="mr-2">
+                <strong id="avalieservico">AVALIE O SERVIÇO QUE VOCÊ UTILIZOU</strong>
+              </p>
+              <div class="msg-container">
+                <span id="avalieservico2">Sua opinião é importante para o aprimoramento de nossos serviços.</span>
+              </div>
+              <br>
+              <button class="iti-svc-trigger br-button" id="buttonaval" onclick="avaliarBotao()">Avaliar</button>
+            </div>
+            <script src="https://servicos.iti.gov.br/client.min.js"></script>
+            <div class="iti-svc-trigger" id="img-content" style="height: 120px">
+              <img src="icone_avaliacaoo.png" alt="Ícone avaliação">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script type="text/javascript" src="./js/bibliotecas/core-init.js"></script> -->
+  <script
+    type="text/javascript"
+    src="./js/componentes/responsividade.js"
+  ></script>
+  <script>
+    sessionStorage.setItem("page", "relatorio");
+    if (sessionStorage.getItem("language") == null)
+      sessionStorage.setItem("language", "portuga");
+    translate();
+    translateheaders();
+
+    if (sessionStorage.getItem("urlQr") != null)
+      document.getElementById("botaoVisualizarDoc").style.display = "block";
+  </script>
+
+  <!--BOTÕES RODAPÉ-->
+  <script type="text/javascript" src="./js/componentes/fastAcess.js"></script>
+  <script type="text/javascript" src="./js/componentes/footer.js"></script>
+  <script type="text/javascript" src="./js/bibliotecas/qrBase.js"></script>
+  <script type="text/javascript" src="./js/bibliotecas/qrCode.js"></script>
+  <script>
+  
+    if (sessionStorage.getItem("imprimir")) {
+      // setTimeout(function () {
+      //   document.getElementById("aaaaa").style.display = "none";
+      // }, 900);
+      setTimeout(function () {
+        document.getElementById("aaaaa").style.display = "none";
+        document.getElementById("bannerAvaliacao").style.display = "none";
+        imprimir();
+        sessionStorage.removeItem("imprimir");
+        document.getElementById("aaaaa").style.display = "block";
+        document.getElementById("bannerAvaliacao").style.display = "flex";
+      }, 1000);
+    }
+    function importCore() {
+      var script = document.createElement("script");
+      script.src = "./node_modules/@govbr-ds/core/dist/core-init.js";
+      document.body.appendChild(script);
+    }
+    setTimeout(importCore, 500);
+  </script>
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+</body>
