@@ -49,6 +49,7 @@
   <script type="text/javascript" src="./js/componentes/header.js"></script>
   <script type="text/javascript" src="./js/componentes/menu.js"></script>
   <script type="text/javascript" src="./js/componentes/searchFilterCustom.js"></script>
+  <script type="javascript" src="./js/file.js"></script>
 
 
 </head>
@@ -247,7 +248,7 @@
                     </div>
                   </div>
 
-                  <a href="relatorio.html"><button id="validateSignature" type="button" class="br-button primary mb-3 mt-3 mt-sm-0 sendForm"
+                  <a><button id="validateSignature" type="button" class="br-button primary mb-3 mt-3 mt-sm-0 sendForm"
                     onclick="">
                     <span class="fas fa-upload mr-2" aria-hidden="true"></span><label class="mt-2" id="submitValidar">
                       Validar
@@ -293,6 +294,25 @@
       document.body.appendChild(script);
     }
     setTimeout(importCore, 500);
+    
+
+
+  let selectedFileName = '';
+  document.getElementById('signature_files').addEventListener('change', function(event) {
+    if (event.target.files.length > 0) {
+      selectedFileName = event.target.files[0].name;
+      console.log('Arquivo selecionado:', selectedFileName);
+    }
+  });
+
+  document.getElementById('validateSignature').addEventListener('click', function() {
+    if (selectedFileName) {
+      window.location.href = `relatorio.html?file=${encodeURIComponent(selectedFileName)}`;
+      
+    } else {
+      window.location.href = `relatorio.html?file=${encodeURIComponent(selectedFileName)}`;
+    }
+  });
   </script>
 
 
